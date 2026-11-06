@@ -41,9 +41,10 @@ def fallar(mensaje):
 
 
 def dia_objetivo():
-    """Dia que vera el visitante: la tarea corre en la noche (hora de Mexico),
-    asi que sumar 12 horas da el dia siguiente; si se corre a mano en la manana, da el mismo dia."""
-    return (datetime.now(ZoneInfo("America/Mexico_City")) + timedelta(hours=12)).date()
+    """Dia que vera el visitante. La tarea programada corre en la noche (hora de la Ciudad de Mexico):
+    de las 18:00 en adelante se toma el dia siguiente; antes de esa hora, el mismo dia."""
+    ahora = datetime.now(ZoneInfo("America/Mexico_City"))
+    return ahora.date() + timedelta(days=1 if ahora.hour >= 18 else 0)
 
 
 def consultar(token, url=URL):
