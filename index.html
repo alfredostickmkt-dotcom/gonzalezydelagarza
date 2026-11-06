@@ -502,7 +502,7 @@ if(TEAM.length){$("#equipo").hidden=false;TEAM.forEach(p=>{const c=document.crea
 const mn=$("#menu"),nv=$("#nav");mn.onclick=()=>{const o=nv.classList.toggle("o");mn.setAttribute("aria-expanded",o)};nv.onclick=()=>{nv.classList.remove("o");mn.setAttribute("aria-expanded",false)};
 $("#f").addEventListener("submit",async e=>{e.preventDefault();const st=$("#st"),n=$("#n").value.trim(),t=$("#t").value.trim(),m=$("#m").value.trim();
 if(!n||!t){st.className="er";st.textContent="! Escribe tu nombre y un teléfono para poder responderte.";return}
-let ok=false;try{const db=window.claude&&await claude.use("db");if(db){await db.doc("mensajes/m"+Date.now()+Math.random().toString(36).slice(2,6)).set({nombre:n,telefono:t,mensaje:m,fecha:new Date().toISOString()});ok=true}}catch(x){}
+st.className="";st.textContent="Enviando…";let ok=false;try{const r=await fetch("https://api.web3forms.com/submit",{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify({access_key:"d558a69d-bb8f-48dd-86a9-930035c771b0",subject:"Nuevo mensaje desde gonzalezydelagarza.com",from_name:"Página web González y De la Garza",Nombre:n,"Teléfono":t,Mensaje:m||"(sin mensaje)"})});const j=await r.json();ok=j.success===true}catch(x){}
 if(ok){st.className="ok";st.textContent="✓ ¡Gracias, "+n+"! Recibimos tu mensaje y te contactaremos pronto.";e.target.reset()}
 else{st.textContent="Abriendo WhatsApp para enviar tu mensaje…";window.open(wa("Hola, soy "+n+" ("+t+"). "+m),"_blank","noopener")}});
 </script><script>
